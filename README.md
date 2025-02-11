@@ -20,11 +20,17 @@ go build -o hwyy #只需要编译一次
 ```sh
 ./hwyy -h 
 ```
+单曲 sq
 ```sh
 ./hwyy -o ./output -q 3   https://url.cloud.huawei.com/rNNkOMZHB6
 ```
-- `-o ./output` 指定输出目录。
-- `-q 3` 选择 SQ（无损品质）。
+- `-o ./output` 指定输出目录
+- `-q 3` 选择 SQ（无损品质）
+
+下载歌单 前三首 空间音频
+```sh
+./hwyy  -q 13 -r 1-3 https://url.cloud.huawei.com/qdnlrLSU24
+```
 
 
 ## 配置文件
@@ -120,7 +126,7 @@ go build -o hwyy #只需要编译一次
   ```
 - **下载歌手专辑时的专辑范围 (-z 参数)**
   ```yaml
-  # album_range: 1-10,13,20-30  # 可选，默认 1-3
+  album_range: 1-10,13,20-30  # 可选，默认 1-3
   ```
 - **多线程下载数量 (-d 参数)**
   ```yaml
