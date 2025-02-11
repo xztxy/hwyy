@@ -76,7 +76,7 @@ func main() {
 	}()
 	var url string
 	if len(os.Args) > 1 {
-		url = os.Args[1]
+		url = os.Args[len(os.Args)-1]
 	}
 	if !strings.HasPrefix(url, "http") {
 		url = ""

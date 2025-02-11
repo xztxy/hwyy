@@ -24,7 +24,7 @@ var (
                                                                                                                           `
 )
 var rootCmd = &cobra.Command{
-	Use:   "hwyy url",
+	Use:   "hwyy [flags] url",
 	Short: "华为音乐下载",
 	Long:  Long,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -50,4 +50,6 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&config.Conf.Range, "range", "r", config.Conf.Range, "Range: 1-10,13,20-30, all")
 	rootCmd.PersistentFlags().StringVarP(&config.Conf.AblumRange, "ablum_range", "z", config.Conf.AblumRange, "Ablum range: 1-10,13,20-30, all")
 	rootCmd.PersistentFlags().BoolVarP(&config.Conf.Download, "download", "d", config.Conf.Download, "Download songs")
+	rootCmd.PersistentFlags().BoolVarP(&config.Conf.Download, "num_threads", "t", config.Conf.Download, "Download Threadss")
+
 }
