@@ -48,17 +48,17 @@ type mp3File struct {
 		ResultCode    string `json:"resultCode"`
 		ResultMessage string `json:"resultMessage"`
 	} `json:"result"`
-	SongInfo  SongInfo `json:"songInfo"`
-	Type      string   `json:"type"`
-	SecretKey string   `json:"secretKey"`
-	Iv        string   `json:"iv"`
+	SongInfo  Info   `json:"songInfo"`
+	Type      string `json:"type"`
+	SecretKey string `json:"secretKey"`
+	Iv        string `json:"iv"`
 }
 type Picture struct {
 	BigImgURL    string `json:"bigImgURL"`
 	MiddleImgURL string `json:"middleImgURL"`
 	SmallImgURL  string `json:"smallImgURL"`
 }
-type SongInfo struct {
+type Info struct {
 	AlbumID       string `json:"albumID"`
 	AlbumNamePair struct {
 		Code string `json:"code"`
@@ -294,7 +294,7 @@ func getFile(contentCode string, qualityType string) (mp3file mp3File, ret int) 
 	}
 	return
 }
-func GetInfos(songInfo SongInfo) (fileInfos FileInfos) {
+func GetInfos(songInfo Info) (fileInfos FileInfos) {
 	contentCode := songInfo.ContentID
 	var contentExInfo ContentExInfo
 	err := json.Unmarshal([]byte(songInfo.ContentExInfo), &contentExInfo)
@@ -397,17 +397,39 @@ func Download(contentCode string) (fileInfos []FileInfo) {
 	fileInfos = GetInfos(mp3file.SongInfo)
 	return
 }
-func GetRange[T any](data []T, rs ...string) []T {
+
+func GetSong(data []Info) []Info {
 	r := Conf.Range
-	if len(rs) > 0 {
-		r = rs[0]
-	}
 	if r == "all" || r == "" {
-		return data
+		return GetRange(data, r)
 	}
 	r = strings.ReplaceAll(r, "，", ",")
+	if r == "0" {
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"ID", "Title", "SubTitle"})
+		for k, v := range data {
+			table.Append([]string{fmt.Sprintf("%d", k+1), fmt.Sprintf("%v", v.ContentName), fmt.Sprintf("%v", v.SubTitle)})
+		}
+		table.SetRowLine(true)
+		table.SetRowSeparator("-")
+		table.SetCenterSeparator("*")
+		table.SetColumnSeparator("|")
+		table.SetBorder(true)
+		table.Render()
+		fmt.Print("请输入要下载的歌曲ID,多个ID用逗号分隔:")
+		_, _ = fmt.Scan(&r)
 
-	ranges := strings.Split(r, ",")
+	}
+
+	return GetRange(data, r)
+}
+func GetRange[T any](data []T, rs string) []T {
+	if rs == "all" || rs == "" {
+		return data
+	}
+	rs = strings.ReplaceAll(rs, "，", ",")
+
+	ranges := strings.Split(rs, ",")
 	var ret []T
 	var rangeRet []int
 	for _, v := range ranges {
@@ -437,7 +459,7 @@ func GetRange[T any](data []T, rs ...string) []T {
 		}
 	}
 	uniqueMap := make(map[int]struct{})
-	uniqueRangeRet := []int{}
+	var uniqueRangeRet []int
 	for _, val := range rangeRet {
 		if _, exists := uniqueMap[val]; !exists {
 			uniqueMap[val] = struct{}{}

@@ -63,19 +63,19 @@ go build -o hwyy #只需要编译一次
   ```
 - **可选变量**
 
-| 变量名         | 说明       |
-|--------------|----------|
-| artist      | 歌手       |
-| title       | 标题       |
-| album       | 专辑名     |
-| sub_title   | 副标题     |
-| output      | 输出路径   |
+| 变量名           | 说明    |
+|---------------|-------|
+| artist        | 歌手    |
+| title         | 标题    |
+| album         | 专辑名   |
+| sub_title     | 副标题   |
+| output        | 输出路径  |
 | playlist_name | 歌单名   |
-| fileFormat  | 音频格式   |
-| filesize    | 文件大小   |
-| duration    | 音频时长   |
-| rate        | 采样率     |
-| file_name   | 文件名格式 |
+| fileFormat    | 音频格式  |
+| filesize      | 文件大小  |
+| duration      | 音频时长  |
+| rate          | 采样率   |
+| file_name     | 文件名格式 |
 
 ## 可选设置(同时支持命令行和配置文件)
 - **是否下载歌词 (-l 参数)**
@@ -120,7 +120,7 @@ go build -o hwyy #只需要编译一次
   ```
   如果指定 `quality`不存在，下载时会提示手动选择。
 
-- **歌单/专辑/歌手单曲的下载范围 (-r 参数)**
+- **歌单/专辑/歌手/搜索单曲的下载范围 (-r 参数)**
   ```yaml
   range: all  # 默认 1-3，可指定具体范围，如 1-10,13,20-30
   ```

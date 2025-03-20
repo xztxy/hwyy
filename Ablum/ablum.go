@@ -19,12 +19,12 @@ type Detail struct {
 		ResultMessage string `json:"resultMessage"`
 	} `json:"result"`
 	AlbumInfoEx struct {
-		AlbumInfo       AlbumInfo       `json:"albumInfo"`
-		SongSimpleInfos []Song.SongInfo `json:"songSimpleInfos"`
+		AlbumInfo       AlbumInfo   `json:"albumInfo"`
+		SongSimpleInfos []Song.Info `json:"songSimpleInfos"`
 	} `json:"albumInfoEx"`
 	MusicListInfoEx struct {
 		MusicListDetail MusicListDetail `json:"musicListDetail"`
-		SongSimpleInfos []Song.SongInfo `json:"songSimpleInfos"`
+		SongSimpleInfos []Song.Info     `json:"songSimpleInfos"`
 	} `json:"musicListInfoEx"`
 }
 type AlbumInfo struct {
@@ -114,7 +114,7 @@ type MusicListDetail struct {
 func GetAlbumInfo(id string) (detail Detail, ret int) {
 	url := "https://api-drcn.music.dbankcloud.cn/music-odpapp-service/v2/service/album/detail/byalbumcode"
 	start := 0
-	var Songs []Song.SongInfo
+	var Songs []Song.Info
 	for {
 		params := map[string]any{
 			"contentCode":     id,
@@ -164,7 +164,7 @@ func GetFiles(id string) (files []Song.FileInfo) {
 	Aritist := alb.ArtistSimpleInfos[0].ArtistName
 	logger.Info("专辑信息", "专辑名", AlbumName, "歌手", Aritist, "专辑描述", AlbumDesc)
 	infos := detail.AlbumInfoEx.SongSimpleInfos
-	infos = Song.GetRange(infos)
+	infos = Song.GetSong(infos)
 	for _, info := range infos {
 		Infos := Song.GetInfos(info)
 		files = append(files, Infos...)

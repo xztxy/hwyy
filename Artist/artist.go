@@ -20,8 +20,8 @@ type Detail struct {
 		ResultMessage string `json:"resultMessage"`
 	} `json:"result"`
 	ArtistInfoEx struct {
-		Info             Info            `json:"artistInfo"`
-		SongSimpleInfos  []Song.SongInfo `json:"songSimpleInfos"`
+		Info             Info        `json:"artistInfo"`
+		SongSimpleInfos  []Song.Info `json:"songSimpleInfos"`
 		DigitalAlbumInfo struct {
 			AlbumCode string `json:"albumCode"`
 			AlbumName string `json:"albumName"`
@@ -62,7 +62,7 @@ type Detail struct {
 			SongType      string `json:"songType"`
 		} `json:"videoSimpleInfos"`
 	} `json:"artistInfoEx"`
-	SongSimpleInfos []Song.SongInfo `json:"songSimpleInfos"`
+	SongSimpleInfos []Song.Info `json:"songSimpleInfos"`
 }
 type Info struct {
 	ContentID   string `json:"contentID"`
@@ -89,7 +89,7 @@ type Info struct {
 func GetArtistInfo(id string) (detail Detail, ret int) {
 	url := "https://api-drcn.music.dbankcloud.cn/music-metacontent-service/v2/service/artist/detail/byartistcode"
 	start := 0
-	var Songs []Song.SongInfo
+	var Songs []Song.Info
 	for {
 		data := map[string]interface{}{
 			"albumNum":        "150",
@@ -190,7 +190,7 @@ func GetFiles(id string) (files []Song.FileInfo) {
 	infos := detail.ArtistInfoEx.SongSimpleInfos
 	if Conf.ArtistType == "s" {
 		config.Format = config.Conf.ArtistSingleFormat
-		Songs := Song.GetRange(infos)
+		Songs := Song.GetSong(infos)
 		for _, info := range Songs {
 			Infos := Song.GetInfos(info)
 			files = append(files, Infos...)

@@ -17,7 +17,7 @@ var (
 func GetPlayListInfo(id string) (detail Ablum.Detail, ret int) {
 	url := "https://api-drcn.music.dbankcloud.cn/music-operation-service/v2/service/musiclist/detail/bymusiclistid"
 	start := 0
-	var Songs []Song.SongInfo
+	var Songs []Song.Info
 	for {
 		data := map[string]any{
 			"copyrightSwitch": "1",
@@ -69,7 +69,7 @@ func GetFiles(id string) (files []Song.FileInfo) {
 	musicListDesc := musicListDetail.Description
 	logger.Info("歌单信息", "歌单名", musicListName, "歌单描述", musicListDesc)
 	infos := detail.MusicListInfoEx.SongSimpleInfos
-	infos = Song.GetRange(infos)
+	infos = Song.GetSong(infos)
 	for _, info := range infos {
 		info.ListName = musicListName
 		Infos := Song.GetInfos(info)

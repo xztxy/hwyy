@@ -9,8 +9,8 @@ import (
 
 var (
 	logger = log.Logger
-	Conf   = config.Conf
-	req    = config.Req
+
+	req = config.Req
 )
 
 type Resp struct {
@@ -33,8 +33,8 @@ type Resp struct {
 		} `json:"mediasearchQu"`
 		MediasearchTop1QuPattern string `json:"mediasearchTop1QuPattern"`
 	} `json:"quResult"`
-	TotalNum        string          `json:"totalNum"`
-	SongSimpleInfos []Song.SongInfo `json:"songSimpleInfos"`
+	TotalNum        string      `json:"totalNum"`
+	SongSimpleInfos []Song.Info `json:"songSimpleInfos"`
 }
 
 func Search(word string) (files []Song.FileInfo) {
@@ -64,7 +64,7 @@ func Search(word string) (files []Song.FileInfo) {
 		return
 	}
 	infos := res.SongSimpleInfos
-	infos = Song.GetRange(infos)
+	infos = Song.GetSong(infos)
 	for _, info := range infos {
 		Infos := Song.GetInfos(info)
 		files = append(files, Infos...)

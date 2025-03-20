@@ -22,9 +22,9 @@ func DownloadFiles(files []FileInfo) {
 		artist := NormalizeFilename(file.ArtistName)
 		title := NormalizeFilename(file.SongName)
 		album := NormalizeFilename(file.AlbumName)
-		sub_title := NormalizeFilename(file.SubTitle)
+		subTitle := NormalizeFilename(file.SubTitle)
 		output := Conf.Output
-		playlist_name := NormalizeFilename(file.ListName)
+		playlistName := NormalizeFilename(file.ListName)
 		fileFormat := strings.ToLower(file.MediaFileType)
 		filesize := file.GetFileSize()
 		duration := file.GetDuration()
@@ -34,9 +34,9 @@ func DownloadFiles(files []FileInfo) {
 			"artist":        artist,
 			"title":         title,
 			"album":         album,
-			"sub_title":     sub_title,
+			"sub_title":     subTitle,
 			"output":        output,
-			"playlist_name": playlist_name,
+			"playlist_name": playlistName,
 			"fileFormat":    fileFormat,
 			"filesize":      filesize,
 			"duration":      duration,
